@@ -102,8 +102,23 @@ return redirect()->back()->with('message','Food Created');
             'description'=>'required',
             'price'=>'required|numeric',
             'category'=>'required|',
-            'image'=>'required|mimes:png,jpg,jpeg',
+            'image'=>'mimes:png,jpg,jpeg',
         ]);
+        $food=Food::find($id);
+        $name =$food->image;
+        if ($request->hasFile('image')){
+            $image =$request->file('image');
+            $name=time().'.'.$image->getClientOriginalExtension();
+            $destinationPath=public_path('/images');
+            $image->move($destinationPath,$name);
+        }
+        $food->name=$request->get('name');
+        $food-> description=$request->get('description');
+        $food->price=$request->get('price');
+        $food->category_id=$request->get('category');
+        $food->image=$name;
+        $food->save();
+        return redirect()->route('food.index')->with('message','Updated successfully');;
     }
 
     /**
@@ -114,6 +129,16 @@ return redirect()->back()->with('message','Food Created');
      */
     public function destroy($id)
     {
-        //
+        $food=Food::find($id);
+        $food->delete();
+        return redirect()->route('food.index')->with('message','Deleted successfully');;
+    }
+    public function listFood()
+    {
+        $categorys=Category::all();
+        $foods=Food::all();
+
+        return view('welcome',compact('foods','categorys'));
+
     }
 }

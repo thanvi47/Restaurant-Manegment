@@ -35,9 +35,21 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
+                    <ul class="navbar-nav ml-auto">
+                        @if(Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('category.index') }}">{{ __('Category') }}</a>
+                            </li>
+                        @endif
                     </ul>
+                    <ul class="navbar-nav ml-auto">
+                        @if(Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('food.index') }}">{{ __('Food') }}</a>
+                            </li>
+                        @endif
+                    </ul>
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

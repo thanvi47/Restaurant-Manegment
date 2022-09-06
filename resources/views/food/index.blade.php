@@ -10,7 +10,13 @@
                     </div>
                 @endif
                 <div class="card">
-                    <div class="card-header">{{ __('All Food') }}</div>
+                    <div class="card-header">{{ __('All Food') }}
+                    <span class="float-end">
+                        <a href="{{route('food.create')}}">
+                            <button class="btn btn-outline-secondary">Add Food</button>
+                        </a>
+                    </span>
+                    </div>
 
                     <div class="card-body">
 
@@ -57,7 +63,7 @@
 
                                             <div class="modal fade" id="exampleModal{{$food->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
-                                                    <form action="{{route('category.destroy',$food->id)}}"method="post">
+                                                    <form action="{{route('food.destroy',$food->id)}}"method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                     <div class="modal-content">

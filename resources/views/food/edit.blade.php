@@ -32,7 +32,7 @@
                         <div class="form-group">
                            <lable for="name"><b>Category</b></lable>
                             <select name="category" class="form-control @error('category')is-invalid @enderror" >
-{{--                                <option value="">Select Category</option>--}}
+                                <option value="">Select Category</option>
                                 @foreach($categorys as $category)
                                     <option value="{{$category->id}}" @if($category->id==$food->category_id) selected @endif>{{$category->name}}</option>
 

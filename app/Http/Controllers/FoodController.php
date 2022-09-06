@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Food;
 use Illuminate\Http\Request;
-use App\Food;
+
 
 class FoodController extends Controller
 {
@@ -14,7 +16,9 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        $foods=Food::all();
+//        $foods=Food::paginate(1);
+        return view('food.index',compact('foods'));
     }
 
     /**
@@ -23,8 +27,9 @@ class FoodController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   $categorys=Category::all();
+        $foods=Food::all();
+        return view('food.create',compact('foods','categorys'));
     }
 
     /**
@@ -34,8 +39,29 @@ class FoodController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     {
-        //
+        $this->validate($request, [
+           'name'=>'required',
+            'description'=>'required',
+            'price'=>'required|numeric',
+            'category'=>'required|',
+            'image'=>'required|mimes:png,jpg,jpeg',
+        ]);
+    $image =$request->file('image');
+    $name=time().'.'.$image->getClientOriginalExtension();
+    $destinationPath=public_path('/images');
+    $image->move($destinationPath,$name);
+    Food::create([
+        'name'=>$request->get('name'),
+        'description'=>$request->get('description'),
+        'price'=>$request->get('price'),
+        'category_id'=>$request->get('category'),
+        'image'=>$name
+
+    ]);
+
+return redirect()->back()->with('message','Food Created');
     }
 
     /**
@@ -57,7 +83,9 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        //
+       $food=Food::find($id);
+       $categorys=Category::all();
+       return view('food.edit',compact('food','categorys'));
     }
 
     /**
@@ -69,7 +97,13 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required',
+            'description'=>'required',
+            'price'=>'required|numeric',
+            'category'=>'required|',
+            'image'=>'required|mimes:png,jpg,jpeg',
+        ]);
     }
 
     /**

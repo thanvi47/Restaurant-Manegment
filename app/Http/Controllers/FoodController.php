@@ -72,7 +72,9 @@ return redirect()->back()->with('message','Food Created');
      */
     public function show($id)
     {
-        //
+        $food=Food::find($id);
+        return view('food.view',compact('food'));
+
     }
 
     /**

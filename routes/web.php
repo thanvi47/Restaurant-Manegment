@@ -23,5 +23,7 @@ Auth::routes();
 
 
 
+
 Route::resource('category','App\Http\Controllers\CategoryController')->middleware('auth');
 Route::resource('food','App\Http\Controllers\FoodController')->middleware('auth');
+Route::get('mail','App\Http\Controllers\FoodController@contact');

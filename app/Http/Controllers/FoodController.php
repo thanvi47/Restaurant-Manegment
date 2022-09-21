@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class FoodController extends Controller
@@ -142,5 +144,19 @@ return redirect()->back()->with('message','Food Created');
 
         return view('welcome',compact('foods','categorys'));
 
+    }
+    public function contact()
+    {
+
+        $data = array(
+            'name'=>Food::get('name')
+        );
+        $foods=Food::all();
+
+
+
+        Mail::send('home', $data, function ($message) {
+            $message->to('thanvisub47@gmail.com', 'Nikki')->subject('Login Details');
+        });
     }
 }

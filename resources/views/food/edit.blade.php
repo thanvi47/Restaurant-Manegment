@@ -30,19 +30,22 @@
 
                        </div>
                         <div class="form-group">
-                           <lable for="name"><b>Category</b></lable>
-                            <select name="category" class="form-control @error('category')is-invalid @enderror" >
-                                <option value="">Select Category</option>
-                                @foreach($categorys as $category)
-                                    <option value="{{$category->id}}" @if($category->id==$food->category_id) selected @endif>{{$category->name}}</option>
+                            <lable for="name"><b>Category</b></lable>
+                            <br>
 
 
-                                @endforeach
+                            @foreach($categorys as $category)
 
-                            </select>
-{{--                           <input type="text" name="category" value="{{$food->category_id}}" class="form-control @error('category_id')is-invalid @enderror" >--}}
+                                <input type="checkbox" name="category[]"
+                                       @foreach($foodcategorys as $foodcategory) @if($category->id==$foodcategory->category_id && $food->id == $foodcategory->food_id ) checked
+                                       value="{{$category->id}}"
+                                       @endif  @endforeach value="{{$category->id}}"      class="m-1 @error('name')is-invalid @enderror">{{$category->name}}
 
-                       </div>
+                            @endforeach
+
+                            {{--                           <input type="text" name="category" value="{{$food->category_id}}" class="form-control @error('category_id')is-invalid @enderror" >--}}
+
+                        </div>
                         <div class="form-group">
                            <lable for="name"><b>Image</b></lable>
                            <input type="file" name="image" value="{{$food->image}}" class="form-control @error('image')is-invalid @enderror" >

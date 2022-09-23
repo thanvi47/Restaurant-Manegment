@@ -11,7 +11,10 @@ class Food extends Model
       'name','description','price','category_id','image'
     ];
     public function category(){
-        return $this->hasOne(Category::class,'id','category_id');
+        return $this->belongsToMany(Category::class,'id','category_id');
+    }
+    public function categorys(){
+        return$this->belongsToMany(Category::class);
     }
     use HasFactory;
 }

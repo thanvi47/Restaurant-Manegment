@@ -45,10 +45,24 @@
                                         <td>{{$food->name}}</td>
                                         <td>{{$food->description}}</td>
                                         <td>{{$food->price}}</td>
-                                        <td>{{$food->category->name}}</td>
                                         <td>
-                                            <a href="{{route('food.edit',$food->id)}}">
-                                                <button class="btn btn-outline-primary">Edit</button></a>
+                                            @foreach($categorys as $category)
+
+                                            @foreach($foodcategorys as $foodcategory)
+
+                                            @if($category->id==$foodcategory->category_id && $food->id == $foodcategory->food_id )
+                                                {{$category->name }}<br>
+
+
+                                                @endif
+
+                                            @endforeach
+                                            @endforeach
+                                        </td>
+                                        <td >
+
+                                            <a href="{{route('food.edit',$food->id,)}}">
+                                                <button class="btn btn-outline-primary ">Edit</button></a>
                                         </td>
                                         <td>
 

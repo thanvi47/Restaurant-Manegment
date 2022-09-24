@@ -84,7 +84,7 @@ class FoodController extends Controller
         ]);
 
 
-        return redirect()->back()->with('message', 'Food Created');
+        return redirect()->route('food.index')->with('message', 'Food Created')  ;
     }
 
     /**
@@ -136,63 +136,24 @@ class FoodController extends Controller
 //       dd($categories);
         $food = Food::findOrFail($id);
         $foodCategory=$food->categories->pluck('id')->toArray();
+        $uniqueCategory = array_diff($categories, $foodCategory);
+
+
         foreach ($foodCategory as $fcid) {
-            foreach ($categories as $category) {
-                if (in_array($category, $foodCategory)) {
-                    return "We have already have this ";
-                } else {
-                    //Insert the category ...
-
-
-
-
-//            print_r($category);
-
-                    $foodcategory = FoodCategory::findOrFail(($fcid));
-                    $foodcategory->category_id = $category;
-                    $foodcategory->save();
-//
-
-
-
-
-                }
-//        print_r($food->id );
-// print_r($foodCategory );
-
-            }
+            $foodcategory = FoodCategory::findOrFail(($fcid));
+            $foodcategory->delete();
         }
-//    die();
+            foreach ($categories as $category) {
+//                dd($food->id);
+                FoodCategory::create([
+                    'category_id' => $category,
+                    'food_id' =>  $food->id,
+                ]);
 
 
-//    $a=[2,3,4,7];
-//    $b=[4,3,7];
+        }
 
 
-
-
-//        $new_categorys = $categorys['category'];
-////            dd($categorys['category']);
-//
-//        $foodcategory_ids = FoodCategory::where('food_id', $id)->get()->pluck('category_id');
-//
-//        foreach ($foodcategory_ids as $foodcategory_id) {
-//
-//            $fcid = $foodcategory_id->id;
-//
-//
-//            foreach ($new_categorys as $new_category) {
-//                $foodcategory = FoodCategory::findOrFail($fcid);
-//
-//                $foodcategory->category_id = $new_category;
-////                ddd($new_category);
-//
-//
-//                $foodcategory->save();
-//
-//            }
-//
-//        }
 
 
 

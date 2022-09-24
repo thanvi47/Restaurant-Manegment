@@ -18,6 +18,7 @@
                        <div class="form-group">
                            <lable for="name"><b>Name</b></lable>
                            <input type="text" name="name" value="{{$food->name}}" class="form-control @error('name')is-invalid @enderror" >
+                           <input type="hidden" name="food_id" value="{{$food->id}}"  >
 
                        </div>
                         <div class="form-group">

@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
 {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
-    <link rel="shortcut icon" href="{{asset('images/1662484317.jpeg')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('images/1664045567.png')}}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

@@ -36,9 +36,9 @@
 
                             @foreach($categorys as $category)
 
-                                <input type="checkbox" name="category[]"
+                                <input type="checkbox" name="categories[]"
                                        @foreach($foodcategorys as $foodcategory) @if($category->id==$foodcategory->category_id && $food->id == $foodcategory->food_id ) checked
-                                       value="{{$category->id}}"
+{{--                                       value="{{$category->id}}"--}}
                                        @endif  @endforeach value="{{$category->id}}"      class="m-1 @error('name')is-invalid @enderror">{{$category->name}}
 
                             @endforeach

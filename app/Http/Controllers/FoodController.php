@@ -109,7 +109,7 @@ class FoodController extends Controller
     public function edit($id)
     {
         $foodcategorys = FoodCategory::all();
-        $food = Food::find($id);
+        $food = Food::findOrFail($id);
         $categorys = Category::all();
         return view('food.edit', compact('food', 'categorys', 'foodcategorys'));
     }
@@ -124,37 +124,78 @@ class FoodController extends Controller
     public function update(Request $request, $id)
     {
 
+
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'category' => 'required|',
+            'categories' => 'required|',
             'image' => 'mimes:png,jpg,jpeg',
         ]);
-        $categorys = $request->all();
+       $categories=$request->input('categories');
+//       dd($categories);
+        $food = Food::findOrFail($id);
+        $foodCategory=$food->categories->pluck('id')->toArray();
+        foreach ($foodCategory as $fcid) {
+            foreach ($categories as $category) {
+                if (in_array($category, $foodCategory)) {
+                    return "We have already have this ";
+                } else {
+                    //Insert the category ...
 
-        $new_categorys = $categorys['category'];
 
 
-        $foodcategory_ids = FoodCategory::all()->where('food_id', $id);
 
-        foreach ($foodcategory_ids as $foodcategory_id) {
+//            print_r($category);
 
-            $fcid = $foodcategory_id->id;
+                    $foodcategory = FoodCategory::findOrFail(($fcid));
+                    $foodcategory->category_id = $category;
+                    $foodcategory->save();
+//
 
 
-            foreach ($new_categorys as $new_category) {
-                $foodcategory = FoodCategory::findOrFail($fcid);
 
-                $foodcategory->category_id = $new_category;
 
-                $foodcategory->save();
+                }
+//        print_r($food->id );
+// print_r($foodCategory );
+
             }
-
         }
+//    die();
 
 
-        $food = Food::find($id);
+//    $a=[2,3,4,7];
+//    $b=[4,3,7];
+
+
+
+
+//        $new_categorys = $categorys['category'];
+////            dd($categorys['category']);
+//
+//        $foodcategory_ids = FoodCategory::where('food_id', $id)->get()->pluck('category_id');
+//
+//        foreach ($foodcategory_ids as $foodcategory_id) {
+//
+//            $fcid = $foodcategory_id->id;
+//
+//
+//            foreach ($new_categorys as $new_category) {
+//                $foodcategory = FoodCategory::findOrFail($fcid);
+//
+//                $foodcategory->category_id = $new_category;
+////                ddd($new_category);
+//
+//
+//                $foodcategory->save();
+//
+//            }
+//
+//        }
+
+
+
         $name = $food->image;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
